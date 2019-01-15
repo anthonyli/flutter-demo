@@ -2,15 +2,11 @@
 
 A new Flutter project.
 
-## Getting Started
+## demo
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+- main.1.dart  官网demo
+- main.2.dart  列表、有状态组件、头部导航
+- main.3.dart  基本布局了解
+- main.4.dart  基本布局+有状态组件
+- main.5.dart  launch 页面加载
+- main.6.dart  读取文件存储数据

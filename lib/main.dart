@@ -1,77 +1,56 @@
-import 'dart:io';
-import 'dart:async';
+// Copyright 2018 The Flutter team. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter/widgets.dart';
+import 'package:hellowork/screens/favorites.dart';
+import 'package:hellowork/screens/home.dart';
+import 'package:hellowork/screens/search.dart';
+import 'package:hellowork/screens/setting.dart';
 
-void main() {
-  runApp(
-    new MaterialApp(
-      title: 'Flutter Demo',
-      theme: new ThemeData(primarySwatch: Colors.blue),
-      home: new FlutterDemo(),
-    ),
-  );
-}
+void main() => runApp(
+      new MaterialApp(
+        title: 'Flutter Demo',
+        theme: new ThemeData(primarySwatch: Colors.blue),
+        home: new HomeScreen(),
+      ),
+    );
 
-class FlutterDemo extends StatefulWidget {
-  FlutterDemo({Key key}) : super(key: key);
-
-  @override
-  _FlutterDemoState createState() => new _FlutterDemoState();
-}
-
-class _FlutterDemoState extends State<FlutterDemo> {
-  int _counter;
-
-  @override
-  void initState() {
-    super.initState();
-    _readCounter().then((int value) {
-      setState(() {
-        _counter = value;
-      });
-    });
-  }
-
-  Future<File> _getLocalFile() async {
-    // get the path to the document directory.
-    String dir = (await getApplicationDocumentsDirectory()).path;
-    return new File('$dir/counter.txt');
-  }
-
-  Future<int> _readCounter() async {
-    try {
-      File file = await _getLocalFile();
-      // read the variable as a string from the file.
-      String contents = await file.readAsString();
-      return int.parse(contents);
-    } on FileSystemException {
-      return 0;
-    }
-  }
-
-  Future<Null> _incrementCounter() async {
-    setState(() {
-      _counter++;
-    });
-    // write the variable as a string to the file
-    await (await _getLocalFile()).writeAsString('$_counter');
-  }
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(title: new Text('Flutter Demo')),
-      body: new Center(
-        child: new Text('Button tapped $_counter time${
-          _counter == 1 ? '' : 's'
-        }.'),
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ),
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(items: [
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.home),
+          title: Text('Home'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.book),
+          title: Text('My Garden'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.search),
+          title: Text('Search'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.settings),
+          title: Text('Settings'),
+        ),
+      ]),
+      tabBuilder: (context, index) {
+        if (index == 0) {
+          return Home();
+        } else if (index == 1) {
+          return FavoritesScreen();
+        } else if (index == 2) {
+          return SearchScreen();
+        } else {
+          return SettingScreen();
+        }
+      },
     );
   }
 }
